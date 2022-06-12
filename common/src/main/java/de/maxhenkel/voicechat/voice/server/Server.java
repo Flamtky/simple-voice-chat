@@ -323,9 +323,9 @@ public class Server extends Thread {
             if (state.isDisabled() || state.isDisconnected()) {
                 continue;
             }
-            if (state.hasGroup() && state.getGroup().equals(group)) {
+            /*if (state.hasGroup() && state.getGroup().equals(group)) {
                 continue;
-            }
+            }*/
             ClientConnection connection = connections.get(player.getGameProfile().getId());
             if (connection == null) {
                 continue;

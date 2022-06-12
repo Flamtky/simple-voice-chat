@@ -85,6 +85,8 @@ public class MicThread extends Thread {
                 ptt(audio);
             } else if (type.equals(MicrophoneActivationType.VOICE)) {
                 voice(audio);
+            } else if (type.equals(MicrophoneActivationType.GROUP_PTT)) {
+                groupPtt(audio);
             }
         }
     }
@@ -131,18 +133,18 @@ public class MicThread extends Thread {
                     deactivationDelay = 0;
                     flush();
                 } else {
-                    sendAudioPacket(audio, wasWhispering);
+                    sendAudioPacket(audio, wasWhispering, false);
                     deactivationDelay++;
                 }
             } else {
-                sendAudioPacket(audio, wasWhispering);
+                sendAudioPacket(audio, wasWhispering, false);
             }
         } else {
             if (offset > 0) {
                 if (lastBuff != null) {
-                    sendAudioPacket(lastBuff, wasWhispering);
+                    sendAudioPacket(lastBuff, wasWhispering, false);
                 }
-                sendAudioPacket(audio, wasWhispering);
+                sendAudioPacket(audio, wasWhispering, false);
                 activating = true;
             }
         }
@@ -163,7 +165,17 @@ public class MicThread extends Thread {
         }
         wasPTT = true;
         wasWhispering = ClientManager.getPttKeyHandler().isWhisperDown();
-        sendAudioPacket(audio, wasWhispering);
+        sendAudioPacket(audio, wasWhispering, false);
+    }
+
+    private void groupPtt(short[] audio) {
+        activating = false;
+        if (!ClientManager.getPttKeyHandler().isPTTDown() || ClientManager.getPttKeyHandler().isWhisperDown()) {
+            voice(audio);
+            return;
+        }
+        wasPTT = true;
+        sendAudioPacket(audio, false, true);
     }
 
     public short[] denoiseIfEnabled(short[] audio) {
@@ -228,7 +240,7 @@ public class MicThread extends Thread {
     private final AtomicLong sequenceNumber = new AtomicLong();
     private volatile boolean stopPacketSent = true;
 
-    private void sendAudioPacket(short[] data, boolean whispering) {
+    private void sendAudioPacket(short[] data, boolean whispering, boolean toGroup) {
         short[] audio = PluginManager.instance().onClientSound(data, whispering);
         if (audio == null) {
             return;

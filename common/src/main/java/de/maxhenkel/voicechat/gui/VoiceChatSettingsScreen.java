@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
 
 public class VoiceChatSettingsScreen extends VoiceChatScreenBase {
 
@@ -30,6 +31,7 @@ public class VoiceChatSettingsScreen extends VoiceChatScreenBase {
     private static final Component SELECT_MICROPHONE = Component.translatable("message.voicechat.select_microphone");
     private static final Component SELECT_SPEAKER = Component.translatable("message.voicechat.select_speaker");
     private static final Component BACK = Component.translatable("message.voicechat.back");
+    protected static final Component TOOLTIP_ACTIVATION = Component.translatable("message.voicechat.tooltip_activation");
 
     @Nullable
     private final Screen parent;
@@ -63,7 +65,9 @@ public class VoiceChatSettingsScreen extends VoiceChatScreenBase {
 
         VoiceActivationSlider voiceActivationSlider = new VoiceActivationSlider(guiLeft + 10, y + 21, xSize - 20, 20);
 
-        addRenderableWidget(new MicActivationButton(guiLeft + 10, y, xSize - 20, 20, voiceActivationSlider));
+        addRenderableWidget(new MicActivationButton(guiLeft + 10, y, xSize - 20, 20, voiceActivationSlider,(button, matrices, mouseX, mouseY) -> {
+            renderTooltip(matrices, TOOLTIP_ACTIVATION, mouseX, mouseY);
+        }));
         y += 21;
 
         addRenderableWidget(voiceActivationSlider);
@@ -73,7 +77,7 @@ public class VoiceChatSettingsScreen extends VoiceChatScreenBase {
         addRenderableWidget(micTestButton);
         y += 21;
 
-        addRenderableWidget(new EnumButton<>(guiLeft + 10, y, xSize - 20, 20, VoicechatClient.CLIENT_CONFIG.audioType) {
+        addRenderableWidget(new EnumButton<>(guiLeft + 10, y, xSize - 20, 20, VoicechatClient.CLIENT_CONFIG.audioType, null) {
             @Override
             protected Component getText(AudioType type) {
                 return Component.translatable("message.voicechat.audio_type", type.getText());
@@ -88,6 +92,7 @@ public class VoiceChatSettingsScreen extends VoiceChatScreenBase {
                 }
             }
         });
+
         y += 21;
         if (isIngame()) {
             addRenderableWidget(new Button(guiLeft + 10, y, xSize - 20, 20, ADJUST_VOLUMES, button -> {

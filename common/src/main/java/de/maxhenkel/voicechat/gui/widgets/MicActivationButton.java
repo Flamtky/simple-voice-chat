@@ -8,8 +8,8 @@ public class MicActivationButton extends EnumButton<MicrophoneActivationType> {
 
     private final VoiceActivationSlider voiceActivationSlider;
 
-    public MicActivationButton(int xIn, int yIn, int widthIn, int heightIn, VoiceActivationSlider voiceActivationSlider) {
-        super(xIn, yIn, widthIn, heightIn, VoicechatClient.CLIENT_CONFIG.microphoneActivationType);
+    public MicActivationButton(int xIn, int yIn, int widthIn, int heightIn, VoiceActivationSlider voiceActivationSlider, TooltipSupplier tooltipSupplier) {
+        super(xIn, yIn, widthIn, heightIn, VoicechatClient.CLIENT_CONFIG.microphoneActivationType, tooltipSupplier);
         this.voiceActivationSlider = voiceActivationSlider;
         updateText();
         setVisibility();

@@ -169,7 +169,6 @@ public class MicThread extends Thread {
     }
 
     private void groupPtt(short[] audio) {
-        activating = false;
         if (!ClientManager.getPttKeyHandler().isPTTDown() || ClientManager.getPttKeyHandler().isWhisperDown()) {
             voice(audio);
             return;
@@ -201,7 +200,7 @@ public class MicThread extends Thread {
     }
 
     public boolean isTalking() {
-        return !microphoneLocked && (activating || wasPTT);
+        return !ClientManager.getPlayerStateManager().isMuted() && (!microphoneLocked && (activating || wasPTT));
     }
 
     public boolean isWhispering() {

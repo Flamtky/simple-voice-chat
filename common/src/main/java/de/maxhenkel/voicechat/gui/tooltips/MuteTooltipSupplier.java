@@ -38,7 +38,8 @@ public class MuteTooltipSupplier implements ImageButton.TooltipSupplier {
     }
 
     public static boolean canMuteMic() {
-        return VoicechatClient.CLIENT_CONFIG.microphoneActivationType.get().equals(MicrophoneActivationType.VOICE);
+        return VoicechatClient.CLIENT_CONFIG.microphoneActivationType.get().equals(MicrophoneActivationType.VOICE) ||
+                VoicechatClient.CLIENT_CONFIG.microphoneActivationType.get().equals(MicrophoneActivationType.GROUP_PTT);
     }
 
 }

@@ -51,7 +51,8 @@ public class RenderEvents {
             renderIcon(stack, DISCONNECT_ICON);
         } else if (manager.isDisabled()) {
             renderIcon(stack, SPEAKER_OFF_ICON);
-        } else if (manager.isMuted() && VoicechatClient.CLIENT_CONFIG.microphoneActivationType.get().equals(MicrophoneActivationType.VOICE)) {
+        } else if (manager.isMuted() && (VoicechatClient.CLIENT_CONFIG.microphoneActivationType.get().equals(MicrophoneActivationType.VOICE) ||
+                VoicechatClient.CLIENT_CONFIG.microphoneActivationType.get().equals(MicrophoneActivationType.GROUP_PTT))) {
             renderIcon(stack, MICROPHONE_OFF_ICON);
         } else if (client != null && client.getMicThread() != null) {
             if (client.getMicThread().isWhispering()) {

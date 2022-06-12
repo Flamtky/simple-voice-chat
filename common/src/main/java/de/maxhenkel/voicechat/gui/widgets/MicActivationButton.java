@@ -26,7 +26,7 @@ public class MicActivationButton extends EnumButton<MicrophoneActivationType> {
     }
 
     private void setVisibility() {
-        voiceActivationSlider.visible = MicrophoneActivationType.VOICE.equals(entry.get());
+        voiceActivationSlider.visible = MicrophoneActivationType.VOICE.equals(entry.get()) || MicrophoneActivationType.GROUP_PTT.equals(entry.get());
     }
 
 }

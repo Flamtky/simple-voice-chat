@@ -214,7 +214,7 @@ public class Server extends Thread {
     }
 
     private void processMicPacket(Player player, PlayerState state, MicPacket packet) throws Exception {
-        if (state.hasGroup()) {
+        if (state.hasGroup() && packet.toGroup) {
             processGroupPacket(state, player, packet);
             if (Voicechat.SERVER_CONFIG.openGroups.get()) {
                 processProximityPacket(state, player, packet);

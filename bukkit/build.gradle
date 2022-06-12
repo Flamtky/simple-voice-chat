@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url = "https://repo.u-team.info" }
+        maven { url "https://repo.u-team.info" }
     }
     dependencies {
         classpath "info.u-team.curse_gradle_uploader:curse_gradle_uploader:1.5.0"
@@ -95,7 +95,7 @@ task runServer {
             workingDir = "${projectDir}/run"
             main = "-jar";
             args = [
-                    "${projectDir}/run/paper.jar",
+                    "${projectDir}/run/craftbukkit-1.19.jar",
                     "nogui"
             ]
         }

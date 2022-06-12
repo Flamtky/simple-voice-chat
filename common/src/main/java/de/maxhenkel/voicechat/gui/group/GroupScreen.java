@@ -107,7 +107,8 @@ public class GroupScreen extends ListScreenBase {
     }
 
     private void checkButtons() {
-        mute.active = VoicechatClient.CLIENT_CONFIG.microphoneActivationType.get().equals(MicrophoneActivationType.VOICE);
+        mute.active = VoicechatClient.CLIENT_CONFIG.microphoneActivationType.get().equals(MicrophoneActivationType.VOICE) ||
+                VoicechatClient.CLIENT_CONFIG.microphoneActivationType.get().equals(MicrophoneActivationType.GROUP_PTT);
         showHUD.active = !VoicechatClient.CLIENT_CONFIG.hideIcons.get();
     }
 

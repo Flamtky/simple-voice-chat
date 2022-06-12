@@ -241,7 +241,7 @@ public class MicThread extends Thread {
     private volatile boolean stopPacketSent = true;
 
     private void sendAudioPacket(short[] data, boolean whispering, boolean toGroup) {
-        short[] audio = PluginManager.instance().onClientSound(data, whispering);
+        short[] audio = PluginManager.instance().onClientSound(data, whispering, toGroup);
         if (audio == null) {
             return;
         }
@@ -249,7 +249,7 @@ public class MicThread extends Thread {
         try {
             if (connection != null && connection.isAuthenticated()) {
                 byte[] encoded = encoder.encode(audio);
-                connection.sendToServer(new NetworkMessage(new MicPacket(encoded, whispering, sequenceNumber.getAndIncrement())));
+                connection.sendToServer(new NetworkMessage(new MicPacket(encoded, whispering, toGroup, sequenceNumber.getAndIncrement())));
                 stopPacketSent = false;
             }
         } catch (Exception e) {
@@ -273,7 +273,7 @@ public class MicThread extends Thread {
             return;
         }
         try {
-            connection.sendToServer(new NetworkMessage(new MicPacket(new byte[0], false, sequenceNumber.getAndIncrement())));
+            connection.sendToServer(new NetworkMessage(new MicPacket(new byte[0], false, false, sequenceNumber.getAndIncrement())));
             stopPacketSent = true;
         } catch (Exception e) {
             e.printStackTrace();

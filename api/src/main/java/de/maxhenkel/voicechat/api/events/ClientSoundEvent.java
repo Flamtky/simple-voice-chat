@@ -26,4 +26,10 @@ public interface ClientSoundEvent extends ClientEvent {
      */
     boolean isWhispering();
 
+    /**
+     * @return if the player is whispering to a group
+     *
+    */
+    boolean isToGroup();
+
 }

@@ -180,8 +180,8 @@ public class PluginManager {
     }
 
     @Nullable
-    public short[] onClientSound(short[] rawAudio, boolean whispering) {
-        ClientSoundEventImpl clientSoundEvent = new ClientSoundEventImpl(new VoicechatClientApiImpl(), rawAudio, whispering);
+    public short[] onClientSound(short[] rawAudio, boolean whispering, boolean toGroup) {
+        ClientSoundEventImpl clientSoundEvent = new ClientSoundEventImpl(new VoicechatClientApiImpl(), rawAudio, whispering, toGroup);
         boolean cancelled = dispatchEvent(ClientSoundEvent.class, clientSoundEvent);
         if (cancelled) {
             return null;
